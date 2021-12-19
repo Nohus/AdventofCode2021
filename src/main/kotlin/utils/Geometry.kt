@@ -48,6 +48,17 @@ data class Vector3(val x: Int, val y: Int, val z: Int) {
         return Vector3(x + other.x, y + other.y, z + other.z)
     }
 
+    operator fun minus(other: Vector3): Vector3 {
+        return Vector3(x - other.x, y - other.y, z - other.z)
+    }
+
+    operator fun get(index: Int): Int = when (index) {
+        0 -> x
+        1 -> y
+        2 -> z
+        else -> throw IllegalArgumentException()
+    }
+
     fun getAdjacent(): List<Vector3> {
         val adjacent = mutableListOf<Vector3>()
         for (x in -1..1) {
