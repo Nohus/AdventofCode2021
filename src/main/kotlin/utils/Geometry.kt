@@ -42,6 +42,32 @@ data class Point(val x: Int, val y: Int) {
     }
 }
 
+fun <T> Map<Point, T>.printArea(visualization: (T) -> Char = { it.toString()[0] }) {
+    val xRange = keys.minOf { it.x }..keys.maxOf { it.x }
+    val yRange = keys.minOf { it.y }..keys.maxOf { it.y }
+    for (y in yRange) {
+        for (x in xRange) {
+            val value = get(Point(x, y))
+            if (value != null) {
+                print(visualization(value))
+            } else {
+                print(" ")
+            }
+        }
+        println()
+    }
+}
+
+@JvmName("printAreaBoolean")
+fun Map<Point, Boolean>.printArea() {
+    printArea { if (it) '█' else ' ' }
+}
+
+@JvmName("printAreaChar")
+fun Map<Point, Char>.printArea() {
+    printArea { it }
+}
+
 data class Vector3(val x: Int, val y: Int, val z: Int) {
 
     operator fun plus(other: Vector3): Vector3 {
