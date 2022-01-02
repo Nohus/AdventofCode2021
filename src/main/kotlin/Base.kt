@@ -8,7 +8,7 @@ private fun getInputFile(): File {
     var name = Throwable().stackTrace.first { it.className.contains("day") }.className.split(".")[0]
     val file = File("src/main/kotlin/$name/input")
     if (file.readText().isBlank()) {
-        name = name.replace("_2", "_1")
+        name = name.substringBefore("_") + "_1"
         return File("src/main/kotlin/$name/input")
     }
     return file
@@ -56,12 +56,12 @@ fun solve(additionalTiming: Boolean = false, solve: (List<String>) -> Any?) {
     Thread.sleep(200) // Wait so the system has chance to notice the clipboard change
 
     if (additionalTiming) {
-        val timeSensitiveRuns = runs.filter { it.time < 250 }
+        val timeSensitiveRuns = runs.filter { it.time < 3000 }
         if (timeSensitiveRuns.isNotEmpty()) {
             println("Rerunning for timing")
             timeSensitiveRuns.forEach { run ->
                 val times = mutableListOf<Double>()
-                val count = if (run.time < 100) 1000 else 100
+                val count = if (run.time < 100) 1000 else 10
                 repeat(count) {
                     val ns = measureNanoTime { solve(run.input.lines()) }
                     val ms = ns / 1000000.0
