@@ -32,3 +32,5 @@ gradle/
 .idea/**/libraries
 
 .idea/misc.xml
+
+**viz/
